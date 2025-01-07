@@ -1,0 +1,1 @@
+export { HadithMain } from "./main";

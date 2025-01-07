@@ -1,0 +1,1 @@
+export { QuranMain } from "./main";

@@ -1,0 +1,1 @@
+export { TafseerMain } from "./main";
