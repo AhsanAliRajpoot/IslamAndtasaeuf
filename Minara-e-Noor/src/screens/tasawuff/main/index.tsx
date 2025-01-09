@@ -52,7 +52,7 @@ export const TasawuffMain: React.FC<TasawufMainScreenProps> = ({
   }, []);
 
   const handlePress = (id: number) => {
-    navigation.navigate("ChapterDetailsScreen", { id });
+    navigation.navigate("ChapterDetailsScreen", { bookId: id });
   };
 
   const categorizedBooks = books.reduce((acc, book) => {

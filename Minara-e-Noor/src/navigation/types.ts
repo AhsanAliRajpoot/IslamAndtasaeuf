@@ -7,18 +7,22 @@ export type HomeStackParamsList = {
   HomeMain: undefined;
   SettingsScreen: undefined;
   ChapterDetailsScreen: { id: string | number; bookId: number };
-  ReadingScreen: { id: string | number; bookId: number };
+  ReadingScreen: { bookId: number; chapterId: number; totalChapters: number };
 };
 
 export type TasawuffStackParamsList = {
   TasawufMain: undefined; // The main screen for Tasawuf
-  ChapterDetailsScreen: { id: string | number }; // Add ChapterDetailsScreen here
-  ReadingScreen: { id: string | number };
+  ChapterDetailsScreen: { bookId: number }; // Add ChapterDetailsScreen here
+  ReadingScreen: { bookId: number; chapterId: number; totalChapters: number };
   params: { id: string | number };
 };
 
 export type HomeStackScreenProps<T extends keyof HomeStackParamsList> =
   StackScreenProps<HomeStackParamsList, T>;
+
+// Props for TasawuffStack screens
+export type TasawuffStackScreenProps<T extends keyof TasawuffStackParamsList> =
+  StackScreenProps<TasawuffStackParamsList, T>;
 
 //--------------------------------------
 export type RootTabsParamsList = {

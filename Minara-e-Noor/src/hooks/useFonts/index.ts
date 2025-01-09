@@ -15,6 +15,7 @@ export const useFonts = async (): Promise<void> => {
     "Al-Mushaf-Quran": require("../../assets/fonts/AlMushafQuran.ttf"),
     "Al-Qalam-Quran-Majeed": require("../../assets/fonts/AlQalamQuranMajeed.ttf"),
     "Al-Mushaf": require("../../assets/fonts/AlMushaf.ttf"),
+    "Jameel-Noori-Nastaleeq-Default": require("../../assets/fonts/Jameel-Noori-Nastaleeq-Default.ttf"),
     "Arab-Quran-Islamic": require("../../assets/fonts/ArabQuranIslamic.ttf"),
     "Mehr-Nastaliq": require("../../assets/fonts/MehrNastaliq.ttf"),
   });

@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  View,
-  SafeAreaView,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView, View, ScrollView, Text, StyleSheet } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { Footer, Header, LanguageSelector } from "@components";
 import { fetchChapterData } from "@api";
-import { Chapter, Paragraph, Reference } from "../../../api/types";
+import { Chapter, Reference } from "../../../api/types";
+import type { TasawuffStackScreenProps } from "@navigation-types"; // Adjust the path to your types file
 
 export const ReadingScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const route = useRoute<TasawuffStackScreenProps<"ReadingScreen">["route"]>();
+  const { bookId, chapterId, totalChapters } = route.params;
 
-  const [currentChapterNumber, setCurrentChapterNumber] = useState(1);
+  const [currentChapterNumber, setCurrentChapterNumber] = useState(chapterId);
   const [currentChapter, setCurrentChapter] = useState<Chapter | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState("اردو");
-  const bookId = 2; // Static bookId, adjust as needed
 
   useEffect(() => {
     loadChapterData(currentChapterNumber);
@@ -28,18 +21,19 @@ export const ReadingScreen: React.FC = () => {
   const loadChapterData = async (chapterNumber: number) => {
     try {
       const chapterData = await fetchChapterData(bookId, chapterNumber);
-      setCurrentChapter(chapterData);
+      const data = chapterData[0];
+      setCurrentChapter(data);
     } catch (error) {
       console.error("Error fetching chapter data:", error);
     }
   };
 
   const handleNextChapter = () => {
-    setCurrentChapterNumber((prev) => (prev === 4 ? 1 : prev + 1)); // Circular navigation
+    setCurrentChapterNumber((prev) => (prev === totalChapters ? 1 : prev + 1)); // Circular navigation
   };
 
   const handlePrevChapter = () => {
-    setCurrentChapterNumber((prev) => (prev === 1 ? 4 : prev - 1)); // Circular navigation
+    setCurrentChapterNumber((prev) => (prev === 1 ? totalChapters : prev - 1)); // Circular navigation
   };
 
   const handleSelectLanguage = (language: string) => {
@@ -47,7 +41,7 @@ export const ReadingScreen: React.FC = () => {
   };
 
   const renderParagraphs = () => {
-    return currentChapter?.Paragraphs.map((paragraph) => {
+    return currentChapter?.Paragraphs?.map((paragraph) => {
       let content = paragraph.content;
       paragraph.References.forEach((ref: Reference) => {
         content = content.replace(`[ref:${ref.id}]`, ref.referenceDetail);
@@ -76,7 +70,7 @@ export const ReadingScreen: React.FC = () => {
         onSettingsPress={() => alert("Settings pressed!")}
       />
       <LanguageSelector
-        languages={["عربی", "English", "Translation", "اردو", "فارسی"]}
+        languages={["عربی", "English", "اردو", "فارسی"]}
         selectedLanguage={selectedLanguage}
         onSelectLanguage={handleSelectLanguage}
       />
@@ -105,12 +99,13 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   paragraphContainer: {
-    marginBottom: 16,
+    marginBottom: 15,
   },
   paragraphText: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 20,
+    lineHeight: 32,
     textAlign: "justify",
+    fontFamily: "Jameel-Noori-Nastaleeq-Default",
   },
   translationText: {
     fontSize: 14,
@@ -119,3 +114,5 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 });
+
+export default ReadingScreen;

@@ -59,11 +59,11 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
+    alignSelf: "center",
     justifyContent: "space-between",
     alignContent: "center",
     paddingHorizontal: 15,
     height: 70,
-    alignSelf: "center",
     width: screenWidth,
     backgroundColor: "#FFF", // Header background color
     shadowColor: "#000",
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   title: {
-    fontFamily: "Pak-Nastaleeq",
+    fontFamily: "Jameel-Noori-Nastaleeq-Default",
     flex: 1,
     textAlign: "center",
     fontSize: 25,
@@ -86,5 +86,7 @@ const styles = StyleSheet.create({
   rightIcons: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
   },
 });

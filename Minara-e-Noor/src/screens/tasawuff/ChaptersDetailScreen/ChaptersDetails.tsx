@@ -22,7 +22,7 @@ export const ChapterDetailsScreen: React.FC<TasawufMainScreenProps> = ({
   navigation,
   route,
 }) => {
-  const { id } = route.params;
+  const { bookId } = route.params;
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +30,9 @@ export const ChapterDetailsScreen: React.FC<TasawufMainScreenProps> = ({
   useEffect(() => {
     const loadChapters = async () => {
       try {
-        const data = await fetchChapters(Number(id)); // Assuming BookId = 2
+        const data = await fetchChapters(bookId); // Assuming BookId = 2
+        console.log(route.params);
+        console.log(bookId);
         setChapters(data);
       } catch (err) {
         setError("Failed to fetch chapters. Please try again later.");
@@ -42,8 +44,15 @@ export const ChapterDetailsScreen: React.FC<TasawufMainScreenProps> = ({
     loadChapters();
   }, []);
 
-  const handleChapterPress = (id: number) => {
-    navigation.navigate("ReadingScreen", { id });
+  const handleChapterPress = (chapterId: number) => {
+    const totalChapters =
+      chapters.length > 0 ? chapters[chapters.length - 1].chapterNumber : 0;
+
+    navigation.navigate("ReadingScreen", {
+      bookId: bookId,
+      chapterId,
+      totalChapters,
+    });
   };
 
   const renderChapter = ({ item }: { item: Chapter }) => (
